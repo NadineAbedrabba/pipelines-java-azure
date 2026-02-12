@@ -1,4 +1,4 @@
-
+[![Build Status](https://dev.azure.com/therapanacea/Nadine-Sandbox/_apis/build/status%2FNadineAbedrabba.pipelines-java-azure?branchName=main)](https://dev.azure.com/therapanacea/Nadine-Sandbox/_build/latest?definitionId=10&branchName=main)
 # Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
