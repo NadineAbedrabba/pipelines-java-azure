@@ -1,0 +1,39 @@
+stages:
+- stage: CheckAgentResources
+  displayName: "Check Agent System Resources"
+  jobs:
+  - job: LogResources
+    displayName: "Log CPU / RAM / Disk"
+    pool:
+      vmImage: 'windows-latest'
+
+    steps:
+    - checkout: none
+
+    - task: PowerShell@2
+      displayName: "Show System Information"
+      inputs:
+        targetType: 'inline'
+        script: |
+          Write-Host "===== OS INFO ====="
+          systeminfo
+
+          Write-Host "===== CPU INFO ====="
+          Get-CimInstance Win32_Processor | 
+            Select-Object Name, NumberOfCores, NumberOfLogicalProcessors
+
+          Write-Host "===== MEMORY INFO ====="
+          Get-CimInstance Win32_ComputerSystem | 
+            Select-Object TotalPhysicalMemory
+
+          Write-Host "===== MEMORY DETAILS ====="
+          Get-CimInstance Win32_PhysicalMemory | 
+            Select-Object Capacity, Speed
+
+          Write-Host "===== DISK INFO ====="
+          Get-PSDrive -PSProvider FileSystem
+
+          Write-Host "===== LIVE MEMORY USAGE ====="
+          Get-Process | 
+            Sort-Object WorkingSet -Descending | 
+            Select-Object -First 10 Name, WorkingSet
