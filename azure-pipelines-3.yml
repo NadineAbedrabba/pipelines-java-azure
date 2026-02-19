@@ -21,6 +21,11 @@ stages:
           Write-Host "===== CPU INFO ====="
           Get-CimInstance Win32_Processor | 
             Select-Object Name, NumberOfCores, NumberOfLogicalProcessors
+          
+          $mem = (Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory / 1GB
+          Write-Host "Total RAM (GB): $mem"
+          Get-PSDrive C
+
 
           Write-Host "===== MEMORY INFO ====="
           Get-CimInstance Win32_ComputerSystem | 
